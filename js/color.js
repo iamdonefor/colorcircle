@@ -45,14 +45,12 @@ function sel_clicked() {
     $(this).addClass('bordered')
 
     // recolor circle
-    wish = Array(0,0,0);
-    for (c=0; c<COLORS.length; c++) {
-        color = COLORS[c];
-
-        r_selected = $('#' + color + '-selector').find(".bordered")[0]
-        v = r_selected.id.replace(color, '')
-        wish[c] = 25*v + 10;
-    }
+    var wish = COLORS.map(function (color) {
+        var r_selected = $('#' + color + '-selector').find(".bordered")[0];
+        var v = r_selected.id.replace(color, '');
+        return 25*v + 10;
+        })
+    console.log(wish);
 
     wcolor = tocolor(wish[0], wish[1], wish[2]);
     $('#cc').css('background-color', wcolor);
@@ -87,9 +85,9 @@ function create_samples() {
     for (i=0; i<CURR_SAMPLES.length; i++) {
         sample = get_sample_by_id(CURR_SAMPLES[i]);
         sample_id = '#sample'+i;
-        $(sample_id).css('background-color', sample.color);
-        $(sample_id).prop('title', sample.id);
-        $(sample_id).data('cid', sample.id);
+        $(sample_id).css('background-color', sample.color)
+                    .prop('title', sample.id)
+                    .data('cid', sample.id);
     }
 }
 
@@ -119,9 +117,9 @@ function redraw_sample(who) {
     CURR_SAMPLES.splice(CURR_SAMPLES.indexOf(who.title), 1);
     CURR_SAMPLES.push(sample.id);
 
-    who.css('background-color', sample.color);
-    who.prop('title', sample.id);
-    who.data('cid', sample.id);
+    who.css('background-color', sample.color)
+        .prop('title', sample.id)
+        .data('cid', sample.id);
 }
 
 function sample_clicked() {
